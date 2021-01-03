@@ -4,6 +4,8 @@ var View = {};
     function S(I) { return document.getElementById(I); }
     var MainCanvas = S('MainCanvas');
     var MainRoot = S('MainRoot');
+    var LeftJoystick = S('LeftJoystick');
+    var RightJoystick = S('RightJoystick');
 
     function openFullscreen(elem) {
         var options = { navigationUI: 'hide' };
@@ -43,15 +45,22 @@ var View = {};
             fixElement(MainCanvas, 0, 0, IW, IH);
             MainCanvas.width = IW * 2;
             MainCanvas.height = IH * 2;
+
+            var diameter = Math.floor(Math.sqrt(IW * IH) * 0.23);
+            var radius = diameter / 2;
+            var top = IH * 0.6;
+            var left = (IW * 0.2) - radius;
+            fixElement(LeftJoystick, left, top, diameter, diameter);
+            fixElement(RightJoystick, IW - left - diameter, top, diameter, diameter);
         }
 
         setElementsPropertiesOnResize();
         window.addEventListener('resize', function () { setElementsPropertiesOnResize(); });
 
         MainRoot.style.display = 'block';
-    }
+    };
 
     View.switchToFullscreen = function () {
         openFullscreen(MainRoot);
-    }
+    };
 })();

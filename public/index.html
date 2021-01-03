@@ -19,7 +19,7 @@
         }
 
         #MainCanvas {
-            background: #111111;
+            background: #000000;
         }
 
         #FullscreenIcon {
@@ -29,12 +29,26 @@
             bottom: 4px;
             right: 4px;
         }
+
+        #LeftJoystick {
+            background-color: #ffffff;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        #RightJoystick {
+            background-color: #ffffff;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
     </style>
 </head>
 
 <body>
     <div id="MainRoot">
         <canvas id="MainCanvas"></canvas>
+        <div id="LeftJoystick"></div>
+        <div id="RightJoystick"></div>
     </div>
     <img src="images/fullscreen_white_48dp.png" id="FullscreenIcon" onclick="View.switchToFullscreen()">
 
