@@ -7,6 +7,11 @@ var View = {};
     var LeftJoystick = S('LeftJoystick');
     var RightJoystick = S('RightJoystick');
 
+    View.MainCanvas = MainCanvas;
+    View.MainRoot = MainRoot;
+    View.LeftJoystick = LeftJoystick;
+    View.RightJoystick = RightJoystick;
+
     function openFullscreen(elem) {
         var options = { navigationUI: 'hide' };
         if (elem.requestFullscreen) {

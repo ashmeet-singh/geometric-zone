@@ -20,7 +20,7 @@ var Vector = {};
 
     Vector.rotate = function (vector, angle, output) {
         var cos = Math.cos(angle), sin = Math.sin(angle);
-        if (!output) output = {};
+        if (!output) { output = {}; }
         var x = vector.x * cos - vector.y * sin;
         output.y = vector.x * sin + vector.y * cos;
         output.x = x;
@@ -29,7 +29,7 @@ var Vector = {};
 
     Vector.rotateAbout = function (vector, angle, point, output) {
         var cos = Math.cos(angle), sin = Math.sin(angle);
-        if (!output) output = {};
+        if (!output) { output = {}; }
         var x = point.x + ((vector.x - point.x) * cos - (vector.y - point.y) * sin);
         output.y = point.y + ((vector.x - point.x) * sin + (vector.y - point.y) * cos);
         output.x = x;
@@ -38,8 +38,7 @@ var Vector = {};
 
     Vector.normalise = function (vector) {
         var magnitude = Vector.magnitude(vector);
-        if (magnitude === 0)
-            return { x: 0, y: 0 };
+        if (magnitude === 0) { return { x: 0, y: 0 }; }
         return { x: vector.x / magnitude, y: vector.y / magnitude };
     };
 
@@ -56,14 +55,14 @@ var Vector = {};
     };
 
     Vector.add = function (vectorA, vectorB, output) {
-        if (!output) output = {};
+        if (!output) { output = {}; }
         output.x = vectorA.x + vectorB.x;
         output.y = vectorA.y + vectorB.y;
         return output;
     };
 
     Vector.sub = function (vectorA, vectorB, output) {
-        if (!output) output = {};
+        if (!output) { output = {}; }
         output.x = vectorA.x - vectorB.x;
         output.y = vectorA.y - vectorB.y;
         return output;

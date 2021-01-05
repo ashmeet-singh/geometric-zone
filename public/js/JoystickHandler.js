@@ -8,6 +8,7 @@ var JoystickHandler = {};
 
         handler.direction = { x: undefined, y: undefined };
         handler.isActive = false;
+        handler.isEnabled = false;
 
 
         function setDirection(x, y) {
@@ -55,20 +56,24 @@ var JoystickHandler = {};
         }
 
         function enable() {
+            if (handler.isEnabled) { return handler; }
             clearDirection();
             elem.addEventListener("touchstart", handleStart, false);
             elem.addEventListener("touchend", handleEnd, false);
             elem.addEventListener("touchcancel", handleCancel, false);
             elem.addEventListener("touchmove", handleMove, false);
+            handler.isEnabled = true;
             return handler;
         }
 
         function disable() {
+            if (!handler.isEnabled) { return handler; }
             clearDirection();
             elem.removeEventListener("touchstart", handleStart, false);
             elem.removeEventListener("touchend", handleEnd, false);
             elem.removeEventListener("touchcancel", handleCancel, false);
             elem.removeEventListener("touchmove", handleMove, false);
+            handler.isEnabled = false;
             return handler;
         }
 
