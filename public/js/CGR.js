@@ -12,7 +12,7 @@ function CGR(options) {
     var ctx = options.ctx;
     var CG = options.CG;
     var translate = GDV(options.translate, Vector.create(0, 0));
-    var rotate = GDV(options.rotate, 0);
+    var rotate = GDV(options.rotate, 0) + GDV(CG.rotate, 0);
     var scale = GDV(options.scale, Vector.create(1, 1));
     var parts = CG.parts;
 
