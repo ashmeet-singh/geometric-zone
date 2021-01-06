@@ -27,12 +27,16 @@ var JoystickHandler = {};
             handler.isActive = false;
         }
 
+        function isElemTouch(touch) {
+            return touch.target.id === elem.id;
+        }
+
         function handleStart(evt) {
             evt.preventDefault();
             var touches = evt.changedTouches;
             var i;
             for (i = 0; i < touches.length; i++) {
-                setDirection(touches[i].clientX, touches[i].clientY);
+                if (isElemTouch(touches[i])) { setDirection(touches[i].clientX, touches[i].clientY); }
             }
         }
 
@@ -41,18 +45,26 @@ var JoystickHandler = {};
             var touches = evt.changedTouches;
             var i;
             for (i = 0; i < touches.length; i++) {
-                setDirection(touches[i].clientX, touches[i].clientY);
+                if (isElemTouch(touches[i])) { setDirection(touches[i].clientX, touches[i].clientY); }
             }
         }
 
         function handleEnd(evt) {
             evt.preventDefault();
-            clearDirection();
+            var touches = evt.changedTouches;
+            var i;
+            for (i = 0; i < touches.length; i++) {
+                if (isElemTouch(touches[i])) { clearDirection(); }
+            }
         }
 
         function handleCancel(evt) {
             evt.preventDefault();
-            clearDirection();
+            var touches = evt.changedTouches;
+            var i;
+            for (i = 0; i < touches.length; i++) {
+                if (isElemTouch(touches[i])) { clearDirection(); }
+            }
         }
 
         function enable() {
