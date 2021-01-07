@@ -5,14 +5,12 @@ var Ship = {};
     Ship.create = function (options) {
         var ship = {
             position: Vector.create(50, 50),
-            oldPosition: undefined,
+            velocity: Vector.create(0, 0),
             direction: Vector.create(0, -1),
             maxSpeed: 0.7,
             hearts: 3,
-            radius: 1.25
+            radius: 1
         };
-
-        ship.oldPosition = Vector.clone(ship.position);
 
         Common.extendObject(ship, options);
 
@@ -25,7 +23,7 @@ var Ship = {};
             type: 'polyline',
             stroke: true,
             strokeStyle: '#ffffff',
-            lineWidth: 0.3,
+            lineWidth: 0.4,
             points: [0.7, -0.7, 1, 0, 0, 1, -1, 0, -0.7, -0.7]
         }]
     };
@@ -37,18 +35,14 @@ var Ship = {};
 
         if (leftJoystick.isActive) {
             ship.direction = Vector.clone(leftJoystick.direction);
-
-            Vector.sub(ship.position, Vector.mult(leftJoystick.direction, ship.maxSpeed), ship.oldPosition)
-
-            var velocity = Vector.sub(ship.position, ship.oldPosition);
-            Vector.add(ship.position, velocity, ship.position);
-
-            CollisionResolver.putCircleInRect(ship, zone);
-
-            Vector.sub(ship.position, velocity, ship.oldPosition);
+            ship.velocity = Vector.mult(leftJoystick.direction, ship.maxSpeed);
         } else {
-            ship.oldPosition = Vector.clone(ship.position);
+            ship.velocity = Vector.create(0, 0);
         }
+
+        Vector.add(ship.position, ship.velocity, ship.position);
+
+        CollisionResolver.putCircleInRect(ship, zone);
     };
 
     Ship.render = function (ship, options) {

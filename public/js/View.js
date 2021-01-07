@@ -1,16 +1,24 @@
 var View = {};
 
-(function () {
-    function S(I) { return document.getElementById(I); }
-    var MainCanvas = S('MainCanvas');
-    var MainRoot = S('MainRoot');
-    var LeftJoystick = S('LeftJoystick');
-    var RightJoystick = S('RightJoystick');
+function QS(selectors, baseElement) {
+    if (baseElement === undefined) { baseElement = document.body; }
+    element = baseElement.querySelector(selectors);
+    return element;
+}
 
-    View.MainCanvas = MainCanvas;
-    View.MainRoot = MainRoot;
-    View.LeftJoystick = LeftJoystick;
-    View.RightJoystick = RightJoystick;
+function QSA(selectors, parentNode) {
+    if (parentNode === undefined) { parentNode = document.body; }
+    elementList = parentNode.querySelectorAll(selectors);
+    return elementList;
+}
+
+(function () {
+    var MainCanvas = QS('#MainCanvas');
+    var MainRoot = QS('#MainRoot');
+    var LeftJoystick = QS('#LeftJoystick');
+    var RightJoystick = QS('#RightJoystick');
+    var MainMenu = QS('#MainMenu');
+    var PauseMenu = QS('#PauseMenu');
 
     function openFullscreen(elem) {
         var options = { navigationUI: 'hide' };
@@ -48,6 +56,8 @@ var View = {};
 
             fixElement(MainRoot, 0, 0, IW, IH);
             fixElement(MainCanvas, 0, 0, IW, IH);
+            fixElement(MainMenu, 0, 0, IW, IH);
+            fixElement(PauseMenu, 0, 0, IW, IH);
             MainCanvas.width = IW * 2;
             MainCanvas.height = IH * 2;
 
@@ -68,4 +78,27 @@ var View = {};
     View.switchToFullscreen = function () {
         openFullscreen(MainRoot);
     };
+
+    View.clearMainCanvas = function () {
+        var ctx = MainCanvas.getContext('2d', { alpha: false });
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, MainCanvas.width, MainCanvas.height);
+    };
+
+    View.show = function (elements, value) {
+        var i;
+        for (i = 0; i < elements.length; i++) {
+            if (value === undefined) { QS(elements[i]).style.display = 'block'; }
+            else { QS(elements[i]).style.display = value; }
+        }
+    };
+
+    View.hide = function (elements) {
+        var i;
+        for (i = 0; i < elements.length; i++) {
+            QS(elements[i]).style.display = 'none';
+        }
+    };
+
 })();

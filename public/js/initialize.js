@@ -2,17 +2,56 @@
 
     View.initializeElements();
 
-    var cvs = View.MainCanvas;
-    var ctx = cvs.getContext('2d', { alpha: false });
+    var fight;
 
-    var fight = Fight.create({
-        cvs: cvs,
-        ctx: ctx,
-        inputs: {
-            leftJoystick: JoystickHandler.create(View.LeftJoystick).enable(),
-            rightJoystick: JoystickHandler.create(View.RightJoystick).enable(),
-        }
-    });
+    function startFight() {
+        View.hide(['#MainMenu']);
+        View.show(['#LeftJoystick', '#RightJoystick', '#PauseIcon']);
 
-    Fight.start(fight);
+        var cvs = QS('#MainCanvas');
+        var ctx = cvs.getContext('2d', { alpha: false });
+        fight = Fight.create({
+            cvs: cvs,
+            ctx: ctx,
+            inputs: {
+                leftJoystick: JoystickHandler.create(QS('#LeftJoystick')).enable(),
+                rightJoystick: JoystickHandler.create(QS('#RightJoystick')).enable(),
+            }
+        });
+
+        Fight.start(fight);
+    }
+
+    function pauseFight() {
+        Fight.stop(fight);
+        View.hide(['#LeftJoystick', '#RightJoystick', '#PauseIcon']);
+        View.show(['#PauseMenu'], 'flex');
+    }
+
+    function resumeFight() {
+        View.hide(['#PauseMenu']);
+        View.show(['#LeftJoystick', '#RightJoystick', '#PauseIcon']);
+        Fight.start(fight);
+    }
+
+    function exitFight() {
+        Fight.stop(fight);
+        fight.inputs.leftJoystick.disable();
+        fight.inputs.rightJoystick.disable();
+        fight = undefined;
+        View.clearMainCanvas();
+        View.hide(['#LeftJoystick', '#RightJoystick', '#PauseIcon', '#PauseMenu']);
+        View.show(['#MainMenu'], 'flex');
+    }
+
+    function restartFight() {
+        exitFight();
+        startFight();
+    }
+
+    QS('#Play').onclick = startFight;
+    QS('#PauseIcon').onclick = pauseFight;
+    QS('#ResumeFight').onclick = resumeFight;
+    QS('#ExitFight').onclick = exitFight;
+    QS('#RestartFight').onclick = restartFight;
 })();
