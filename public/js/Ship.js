@@ -7,7 +7,7 @@ var Ship = {};
             position: Vector.create(50, 50),
             oldPosition: undefined,
             direction: Vector.create(0, -1),
-            maxSpeed: 0.6,
+            maxSpeed: 0.7,
             hearts: 3,
             radius: 1.25
         };
@@ -42,9 +42,12 @@ var Ship = {};
 
             var velocity = Vector.sub(ship.position, ship.oldPosition);
             Vector.add(ship.position, velocity, ship.position);
-            ship.oldPosition = Vector.sub(ship.position, velocity);
+
+            CollisionResolver.putCircleInRect(ship, zone);
+
+            Vector.sub(ship.position, velocity, ship.oldPosition);
         } else {
-            ship.oldPosition = ship.position;
+            ship.oldPosition = Vector.clone(ship.position);
         }
     };
 

@@ -8,7 +8,8 @@
             canvasScaledWidth, canvasScaledHeight, canvasScale,
             zoneWidth = zone.max.x - zone.min.x,
             zoneHeight = zone.max.y - zone.min.y,
-            padding;
+            padding,
+            strength;
 
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.fillStyle = '#000000';
@@ -26,7 +27,11 @@
 
         ctx.scale(canvasScale, canvasScale);
 
-        ctx.translate((canvasScaledWidth / 2) - ship.position.x, (canvasScaledHeight / 2) - ship.position.y);
+        strength = 0.6;
+        ctx.translate(
+            (canvasScaledWidth / 2) - ((ship.position.x - (zoneWidth * 0.5)) * strength) - (zoneWidth * 0.5),
+            (canvasScaledHeight / 2) - ((ship.position.y - (zoneHeight * 0.5)) * strength) - (zoneHeight * 0.5)
+        );
 
         Ship.render(ship, { ctx: ctx });
 
