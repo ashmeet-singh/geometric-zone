@@ -2,17 +2,17 @@ var Common = {};
 
 (function () {
 
-    Common.extendObject = function (object, source) {
-        if (source === undefined) { return object; }
+    Common.extendObject = function (obj, source) {
+        if (source === undefined) { return obj; }
         var P;
         for (P in source) {
-            if (typeof source[P] === 'object' && typeof object[P] === 'object') {
-                Common.extendObject(object[P], source[P]);
+            if (typeof source[P] === 'object' && typeof obj[P] === 'object') {
+                Common.extendObject(obj[P], source[P]);
             } else {
-                object[P] = source[P];
+                obj[P] = source[P];
             }
         }
-        return object;
+        return obj;
     };
 
     Common.getRndNum = function (min, max, scale) {

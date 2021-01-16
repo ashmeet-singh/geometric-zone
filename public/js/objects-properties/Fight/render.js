@@ -5,11 +5,14 @@
             cvs = fight.cvs,
             ship = fight.ship,
             zone = fight.zone,
+            bullets = fight.bullets,
             canvasScaledWidth, canvasScaledHeight, canvasScale,
             zoneWidth = zone.max.x - zone.min.x,
             zoneHeight = zone.max.y - zone.min.y,
             padding,
             strength;
+
+        var i, l;
 
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.fillStyle = '#000000';
@@ -32,6 +35,11 @@
             (canvasScaledWidth / 2) - ((ship.position.x - (zoneWidth * 0.5)) * strength) - (zoneWidth * 0.5),
             (canvasScaledHeight / 2) - ((ship.position.y - (zoneHeight * 0.5)) * strength) - (zoneHeight * 0.5)
         );
+
+        l = bullets.length;
+        for (i = 0; i < l; i++) {
+            Bullet.render(bullets[i], { ctx: ctx });
+        }
 
         Ship.render(ship, { ctx: ctx });
 

@@ -49,9 +49,10 @@
         startFight();
     }
 
-    QS('#Play').onclick = startFight;
-    QS('#PauseIcon').onclick = pauseFight;
-    QS('#ResumeFight').onclick = resumeFight;
-    QS('#ExitFight').onclick = exitFight;
-    QS('#RestartFight').onclick = restartFight;
+    QS('#FullscreenIcon').addEventListener('click', function () { View.switchToFullscreen(); });
+    QS('#Play').addEventListener('click', function () { startFight(); });
+    QS('#PauseIcon').addEventListener('click', function () { pauseFight(); });
+    QS('#ResumeFight').addEventListener('click', function () { resumeFight(); });
+    QS('#ExitFight').addEventListener('click', function () { exitFight(); });
+    QS('#RestartFight').addEventListener('click', function () { restartFight(); });
 })();

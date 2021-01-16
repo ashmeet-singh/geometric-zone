@@ -9,7 +9,13 @@ var Ship = {};
             direction: Vector.create(0, -1),
             maxSpeed: 0.7,
             hearts: 3,
-            radius: 1
+            radius: 1,
+            weapons: {
+                gun: {
+                    lastFired: 0,
+                    firingInterval: 200
+                }
+            }
         };
 
         Common.extendObject(ship, options);
@@ -29,9 +35,11 @@ var Ship = {};
     };
 
     Ship.update = function (ship, options) {
-        var zone = options.zone;
-        var leftJoystick = options.leftJoystick;
-        var rightJoystick = options.rightJoystick;
+        var zone = options.zone,
+            time = options.time,
+            bullets = options.bullets,
+            leftJoystick = options.leftJoystick,
+            rightJoystick = options.rightJoystick;
 
         if (leftJoystick.isActive) {
             ship.direction = Vector.clone(leftJoystick.direction);
@@ -43,6 +51,21 @@ var Ship = {};
         Vector.add(ship.position, ship.velocity, ship.position);
 
         CollisionResolver.putCircleInRect(ship, zone);
+
+        if (rightJoystick.isActive) {
+            var gun = ship.weapons.gun;
+            if (time - gun.lastFired > gun.firingInterval) {
+                var firingMargin = 2 + ship.radius,
+                    bulletSpeed = 1.4;
+
+                bullets.push(Bullet.create({
+                    position: Vector.add(ship.position, Vector.mult(rightJoystick.direction, firingMargin)),
+                    velocity: Vector.mult(rightJoystick.direction, bulletSpeed)
+                }));
+
+                gun.lastFired = time;
+            };
+        }
     };
 
     Ship.render = function (ship, options) {
